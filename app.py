@@ -38,7 +38,13 @@ def aufetch():
 
             final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
             threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
-            return send_file(final_path, as_attachment=True)
+            return send_file(
+                final_path,
+                as_attachment=True,
+                download_name=os.path.basename(final_path),
+                conditional=True,
+                mimetype="application/octet-stream"
+            )
 
         else:  # audio
             output_path = f"{file_path}.%(ext)s"
@@ -56,7 +62,13 @@ def aufetch():
 
             final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
             threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
-            return send_file(final_path, as_attachment=True, conditional=True)
+            return send_file(
+                final_path,
+                as_attachment=True,
+                download_name=os.path.basename(final_path),
+                mimetype="application/octet-stream",
+                conditional=True
+            )
 
     except subprocess.CalledProcessError as e:
         return f"Error downloading: {str(e)}", 500
