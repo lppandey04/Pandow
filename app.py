@@ -74,7 +74,7 @@ def aufetch():
             )
 
     except subprocess.CalledProcessError as e:
-        return f"Error downloading: {str(e)}", 500
+        return print(e), 500
 
 def delayed_delete(path, delay):
     time.sleep(delay)
