@@ -1,0 +1,5 @@
+pandowvenv/
+__pycache__/
+*.pyc/
+.env/
+downloads/

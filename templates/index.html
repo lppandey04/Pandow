@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .bg-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(15,23,42,0.95));
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        .card {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
+
+        h1, h5 {
+            color: #a3e635;
+        }
+    </style>
+
+    <title>Pandow</title>
+    <link rel="icon" type="image/x-icon" href="static/pandow_logo.ico">
+</head>
+
+
+  <div class="bg-image">
+    <div class="bg-overlay"></div>
+
+    <div class="container d-flex justify-content-center align-items-start content-box flex-column text-white text-center">
+      <!-- <h1  style="font-family: 'Rajdhani', sans-serif; font-weight: 700;">Pandow</h1> -->
+        <h1 class="mt-5 pt-5 mb-5 w-100" style="font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: 3px; font-size: 3rem;">Pandow</h1>
+      <!-- Form Section -->
+      <form method="POST" id="urlform" class="d-flex flex-column flex-md-row gap-2 justify-content-center align-items-center pt-2 mb-5 w-100">
+        <input type="text" name="url" class="form-control w-75 w-md-50" placeholder="Paste URL" required>
+        <select name="format" id="format" class="form-select w-auto" required>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
+        </select>
+        <button class="btn btn-primary" type="submit">Fetch Now</button>
+      </form>
+        <div id="loader" hidden class="mb-4 w-100">
+            <div class="mx-auto" style="width: 30%;">
+            <div class="progress" style="--bs-progress-height: 1.5rem;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%;">
+                Processing
+                </div>
+            </div>
+            </div>
+            <p class="mt-2">Large files can take more time to download and convert.</p>
+        </div>
+        <div class="container d-flex justify-content-center">
+                  <!-- Loader -->
+            <div class="row text-white p-3 rounded align-items-center" style="max-width: 800px;">
+                <div class="col-12 col-md-3 text-md-start text-center mb-2 mb-md-0">
+                    <h5 class="text-danger fw-bold mb-0">Note</h5>
+                </div>
+            <div class="col-12 col-md-9 text-center text-md-start">
+                <p class="mb-0" style="font-size: 14px; line-height: 1.5;">
+                Video will be downloaded in <strong>maximum 720p quality</strong> to ensure fast and smooth delivery. Files are removed from server after 30 sec of fetching.<br>
+                Please consider supporting us by clicking on ads. It helps us cover server costs and provide a better experience. <span class="text-danger">❤️</span>
+                </p>
+            </div>
+            </div>
+      </div>
+
+        <div class="mx-auto text-center mt-4 pt-4">
+            <h5 class="mb-3">🌐 Supported Sites</h5>
+
+            <div class="d-inline-flex flex-wrap justify-content-center gap-4 pt-2 text-center">
+                <span><i class="fab fa-youtube text-danger"></i> YouTube</span>
+                <span><i class="fab fa-facebook text-primary"></i> Facebook</span>
+                <span><i class="fab fa-instagram text-warning"></i> Instagram</span>
+                <span><i class="fab fa-twitter text-info"></i> Twitter (X)</span>
+                <span><i class="fas fa-twitch text-secondary"></i> Twitch</span>
+                <span><i class="fas fa-film text-secondary"></i> Dailymotion</span>
+                <span><i class="fab fa-reddit text-danger"></i> Reddit</span>
+                <span class="text-white">+ 1000 more...</span>
+                <a href="/static/LoSS.pdf" target="_blank" class="text-decoration-none">
+                    <i class="fas fa-file-pdf text-danger"></i> View full list
+                </a>
+            </div>
+        </div>
+
+
+      <!-- Ad Section -->
+      <div class="container mb-5 pt-5">
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <div class="card bg-dark text-white h-100">
+              <img src="static/bg.jpg" class="card-img-top" alt="Ad 1">
+              <div class="card-body">
+                <h5 class="card-title">Space left for Ad</h5>
+                <p class="card-text">Contact: pandow@gmail.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card bg-dark text-white h-100">
+              <img src="static/bg.jpg" class="card-img-top" alt="Ad 2">
+              <div class="card-body">
+                <h5 class="card-title">Space left for Ad</h5>
+                <p class="card-text">Contact: pandow@gmail.com</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card bg-dark text-white h-100">
+              <img src="static/bg.jpg" class="card-img-top" alt="Ad 3">
+              <div class="card-body">
+                <h5 class="card-title">Space left for Ad</h5>
+                <p class="card-text">Contact: pandow@gmail.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="container d-flex justify-content-center">
+        <div class="row text-white p-3 rounded align-items-center" style="max-width: 800px;">
+          <div class="col-12 col-md-3 text-md-start text-center mb-2 mb-md-0">
+            <h5 class="text-danger fw-bold mb-0">Disclaimer</h5>
+          </div>
+          <div class="col-12 col-md-9 text-center text-md-start">
+        <p>
+            Pandow is a general-purpose media download tool that fetches publicly accessible content from URLs.
+            This tool is not affiliated with, endorsed by, or associated with any specific website or platform. We do not host or store any videos, audio files, or media content on our servers.
+            Pandow simply provides a simplified web interface for the open-source tool yt-dlp. We do not control or influence the use of this tool beyond its core functionality.
+        </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-dark text-light py-4 mt-5">
+      <div class="container d-flex flex-column flex-md-row justify-content-center align-items-center text-center text-md-start gap-5">
+          
+          <!-- Logo -->
+          <div class="mb-3 mb-md-0">
+              <img src="static/pandow_logo.png" alt="Pandow Logo" height="54">
+          </div>
+
+          <!-- Links + Icons -->
+          <div>
+              <p class="mb-1 small">
+                  <a target="_blank" href="static/tnc.pdf" style="text-decoration: none; color: inherit; margin-right: 10px;">Terms & Conditions</a> |
+                  <a target="_blank" href="static/pp.pdf" style="text-decoration: none; color: inherit; margin-left: 10px; margin-right: 10px;">Privacy Policy</a> |
+                  <a target="_blank" href="mailto:pandow@gmail.com" style="text-decoration: none; color: inherit; margin-left: 10px;">Send Mail</a>
+              </p>
+              <div>
+                  <a style="text-decoration: none; color: inherit; margin-right: 15px;">Find us on</a>
+                  <a target="_blank" href="#" style="text-decoration: none; color: inherit; margin-right: 15px;"><i class="fab fa-instagram text-warning"></i></a>
+                  <a target="_blank" href="#" style="text-decoration: none; color: inherit; margin-right: 15px;"><i class="fab fa-telegram text-info"></i></a>
+                  <a target="_blank" href="#" style="text-decoration: none; color: inherit; margin-right: 15px;"><i class="fab fa-github text-primary"></i></a>
+                  <a target="_blank" href="#" style="text-decoration: none; color: inherit;"><i class="fab fa-youtube text-danger"></i></a>
+              </div>
+          </div>
+      </div>
+    </footer>
+
+  </div>
+
+    <script>
+        document.getElementById("urlform").addEventListener("submit", async function(e){
+            e.preventDefault();
+            const form = e.target;
+            const url = form.url.value;
+            const format = form.format.value;
+
+            document.getElementById("loader").hidden = false;
+
+            try {
+                const response = await fetch("start", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url, format })
+                });
+
+                if (!response.ok) throw new Error("Download failed");
+
+                // Try to get filename from Content-Disposition header
+                let filename = "pandow_download";
+                const disposition = response.headers.get("Content-Disposition");
+                if (disposition && disposition.includes("filename=")) {
+                    filename = disposition.split("filename=")[1].replace(/["']/g, '');
+                } else {
+                    // fallback extension
+                    filename += format === "audio" ? ".audio" : ".video";
+                }
+
+                const blob = await response.blob();
+                const a = document.createElement("a");
+                a.href = window.URL.createObjectURL(blob);
+                a.download = filename;
+                a.click();
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                document.getElementById('loader').hidden = true;
+            }
+        });
+    </script>
+
+</html>
