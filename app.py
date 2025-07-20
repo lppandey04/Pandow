@@ -4,7 +4,6 @@ import subprocess
 import uuid
 import threading
 import time
-import mimetypes
 
 app = Flask(__name__)
 DOWNLOAD_FOLDER = "downloads"
@@ -39,14 +38,7 @@ def aufetch():
 
             final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
             threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
-            mimetype, _ = mimetypes.guess_type(final_path)
-            return send_file(
-                final_path,
-                as_attachment=True,
-                download_name=os.path.basename(final_path),
-                conditional=True,
-                mimetype=mimetype or "application/octet-stream"
-            )
+            return send_file(final_path, as_attachment=True)
 
         else:  # audio
             output_path = f"{file_path}.%(ext)s"
@@ -64,17 +56,10 @@ def aufetch():
 
             final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
             threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
-            mimetype, _ = mimetypes.guess_type(final_path)
-            return send_file(
-                final_path,
-                as_attachment=True,
-                download_name=os.path.basename(final_path),
-                conditional=True,
-                mimetype=mimetype or "application/octet-stream"
-            )
+            return send_file(final_path, as_attachment=True, conditional=True)
 
     except subprocess.CalledProcessError as e:
-        return print(e), 500
+        return f"Error downloading: {str(e)}", 500
 
 def delayed_delete(path, delay):
     time.sleep(delay)
