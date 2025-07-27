@@ -8,6 +8,9 @@ import time
 app = Flask(__name__)
 DOWNLOAD_FOLDER = "downloads"
 
+if not os.path.exists(DOWNLOAD_FOLDER):
+    os.makedirs(DOWNLOAD_FOLDER)
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
