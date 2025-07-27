@@ -22,53 +22,55 @@ def aufetch():
     format = data.get("format", "audio")
 
     uid = str(uuid.uuid4())
-    file_path = f"{DOWNLOAD_FOLDER}/{uid}"
+    output_template = f"{DOWNLOAD_FOLDER}/{uid}.%(ext)s"
 
     try:
+        # Set format and mime type
         if format == "video":
-            output_path = f"{file_path}.%(ext)s"
-            subprocess.run([
-                "yt-dlp",
-                "--geo-bypass",
-                "--force-ipv4",
-                "-v",
-                "-f", "bv[height<=720]+ba/b[height<=720]",
-                "-o", output_path,
-                url
-            ], capture_output=True, text=True)
+            yt_format = "bv[height<=720]+ba/b[height<=720]"
+            mime_type = "video/mp4"
+        else:
+            yt_format = "bestaudio"
+            mime_type = "audio/mpeg"
 
-            # Find actual filename with extension
-            downloaded_files = [f for f in os.listdir(DOWNLOAD_FOLDER) if f.startswith(uid)]
-            if not downloaded_files:
-                return "Video file not found after download", 500
+        # Run yt-dlp
+        result = subprocess.run([
+            "yt-dlp",
+            "--geo-bypass",
+            "--force-ipv4",
+            "-v",
+            "-f", yt_format,
+            "-o", output_template,
+            url
+        ], capture_output=True, text=True)
 
-            final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
-            threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
-            return send_file(final_path, as_attachment=True)
+        if result.returncode != 0:
+            return f"Download failed:\n{result.stderr}", 500
 
-        else:  # audio
-            output_path = f"{file_path}.%(ext)s"
-            subprocess.run([
-                "yt-dlp",
-                "--geo-bypass",
-                "--force-ipv4",
-                "-v",
-                "-f", "bestaudio",
-                "-o", output_path,
-                url
-            ], capture_output=True, text=True)
+        # Retry loop to wait for file to appear
+        downloaded_file = None
+        for _ in range(10):
+            matches = [f for f in os.listdir(DOWNLOAD_FOLDER) if f.startswith(uid)]
+            if matches:
+                downloaded_file = matches[0]
+                break
+            time.sleep(0.5)
 
-            # Find actual filename with extension
-            downloaded_files = [f for f in os.listdir(DOWNLOAD_FOLDER) if f.startswith(uid)]
-            if not downloaded_files:
-                return "Audio file not found after download", 500
+        if not downloaded_file:
+            return "File not found after download", 500
 
-            final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_files[0])
-            threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
-            return send_file(final_path, as_attachment=True, conditional=True)
+        final_path = os.path.join(DOWNLOAD_FOLDER, downloaded_file)
 
-    except subprocess.CalledProcessError as e:
-        return f"Error downloading: {str(e)}", 500
+        if not os.path.exists(final_path):
+            return "File seems to be deleted or inaccessible", 500
+
+        # Start auto-delete in background
+        threading.Thread(target=delayed_delete, args=(final_path, 30), daemon=True).start()
+
+        return send_file(final_path, as_attachment=True, conditional=True, mimetype=mime_type)
+
+    except Exception as e:
+        return f"Unexpected error: {str(e)}", 500
 
 def delayed_delete(path, delay):
     time.sleep(delay)
@@ -76,7 +78,7 @@ def delayed_delete(path, delay):
         if os.path.exists(path):
             os.remove(path)
     except Exception as e:
-        return e
+        print(f"Error deleting file {path}: {e}")
 
 if __name__ == '__main__':
     app.run(debug=False, threaded=True)
