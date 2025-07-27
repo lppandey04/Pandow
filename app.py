@@ -26,6 +26,7 @@ def aufetch():
             output_path = f"{file_path}.%(ext)s"
             subprocess.run([
                 "yt-dlp",
+                "--geo-bypass",
                 "-f", "bv[height<=720]+ba/b[height<=720]",
                 "-o", output_path,
                 url
@@ -44,6 +45,8 @@ def aufetch():
             output_path = f"{file_path}.%(ext)s"
             subprocess.run([
                 "yt-dlp",
+                "--geo-bypass",
+                "--force-ipv4",
                 "-f", "bestaudio",
                 "-o", output_path,
                 url
