@@ -32,7 +32,7 @@ def aufetch():
                 "-f", "bv[height<=720]+ba/b[height<=720]",
                 "-o", output_path,
                 url
-            ], check=True)
+            ], capture_output=True, text=True)
 
             # Find actual filename with extension
             downloaded_files = [f for f in os.listdir(DOWNLOAD_FOLDER) if f.startswith(uid)]
@@ -53,7 +53,7 @@ def aufetch():
                 "-f", "bestaudio",
                 "-o", output_path,
                 url
-            ], check=True)
+            ], capture_output=True, text=True)
 
             # Find actual filename with extension
             downloaded_files = [f for f in os.listdir(DOWNLOAD_FOLDER) if f.startswith(uid)]
