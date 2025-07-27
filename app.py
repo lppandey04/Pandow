@@ -27,6 +27,8 @@ def aufetch():
             subprocess.run([
                 "yt-dlp",
                 "--geo-bypass",
+                "--force-ipv4",
+                "-v",
                 "-f", "bv[height<=720]+ba/b[height<=720]",
                 "-o", output_path,
                 url
@@ -47,6 +49,7 @@ def aufetch():
                 "yt-dlp",
                 "--geo-bypass",
                 "--force-ipv4",
+                "-v",
                 "-f", "bestaudio",
                 "-o", output_path,
                 url
